@@ -202,15 +202,22 @@ function animate() {
   requestAnimationFrame(
     animate
   );
-
+let idleRotation = 0;
   if (brain) {
 
-    brain.rotation.y +=
-      (targetRotation -
-        brain.rotation.y) *
-      0.05;
+    // Floating motion
+    brain.position.y =
+      Math.sin(Date.now() * 0.001) * 0.12;
 
-  }
+    // Slow continuous movement
+    idleRotation += 0.002;
+
+    // Smooth snap to target
+    brain.rotation.y +=
+      ((targetRotation + idleRotation) -
+      brain.rotation.y) * 0.05;
+
+}
 
   renderer.render(
     scene,
